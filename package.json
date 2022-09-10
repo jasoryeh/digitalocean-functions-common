@@ -1,0 +1,16 @@
+{
+  "name": "dof-common",
+  "version": "1.0.0",
+  "description": "Common library for Digital Ocean functions.",
+  "main": "common.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "crypto": "^1.0.1",
+    "mysql": "^2.18.1"
+  }
+}
