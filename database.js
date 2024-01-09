@@ -18,8 +18,10 @@ async function query(query, bindings = []) {
             if (err) {
                 console.log("A database error ocurred while executing this query.");
                 console.log(err);
+                connection.end();
                 reject(err);
             } else {
+                connection.end();
                 resolve(result);
             }
         });
