@@ -38,7 +38,7 @@ function responseMaker(data = null, code = 200, error = false, notifyMessage = n
     };
     return {
         body: response,
-        status: (ifNull404 && data == null) ? 404 : code
+        statusCode: (ifNull404 && data == null) ? 404 : code
     };
 }
 
