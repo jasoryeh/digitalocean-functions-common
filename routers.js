@@ -54,7 +54,7 @@ function methodRouter(methodRoutes) {
 
         let findRoute = methodRoutes[method];
         if (!findRoute || findRoute == null) {
-            console.log("Method doesn't exist: " + procdPath);
+            console.log("Method doesn't exist: " + method);
             console.log(methodRoutes);
             return responseMaker(args, 400, null, `Request method unsupported: ${method}`, `The ${method} request method is not supported on this route!`);
         }
