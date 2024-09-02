@@ -56,6 +56,15 @@ function methodRouter(methodRoutes) {
         if (!findRoute || findRoute == null) {
             console.log("Method doesn't exist: " + method);
             console.log(methodRoutes);
+            if (method == "OPTIONS") {
+                let response = responseMaker(args, 200, null, `Preflight/Options.`, `Success.`);
+                response.headers = {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "*",
+                    "Access-Control-Allow-Headers": "*",
+                };
+                return response;
+            }
             return responseMaker(args, 400, null, `Request method unsupported: ${method}`, `The ${method} request method is not supported on this route!`);
         }
         //console.log("Running...");
