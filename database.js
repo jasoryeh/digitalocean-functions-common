@@ -63,7 +63,7 @@ function qCount(table, rawConditions = null) {
 }
 
 /**
- * Generates a query for selecting rows based on `repeat` filters and a single repeating clause.
+ * Generates a query for selecting rows based on multiple columns joined by `join_phrase` (e.g. AND, OR).
  * @param {String} table 
  * @param {String[]} columns 
  * @param {String} join_phrase 
@@ -71,10 +71,23 @@ function qCount(table, rawConditions = null) {
  * @returns {String}
  * @throws {Error}
  */
-function qSelectID_Plural(table, columns, join_phrase = 'OR', rawColumns = '*') {
+function qSelectID_Multiple(table, columns, join_phrase = 'OR', rawColumns = '*') {
     if (columns.length < 1) throw new Error(`Invalid column count: ${columns}`);
     let where_conditions = columns.map(col => `\`${col}\` = ?`).join(` ${join_phrase} `);
     return qSelect(table, where_conditions, rawColumns);
+}
+
+/**
+ * Generates a query for selecting columns based on one column `repeat` number of times.
+ * @param {String} table 
+ * @param {String} column 
+ * @param {Number} repeat 
+ * @param {String} join_phrase 
+ * @param {String} rawColumns 
+ * @returns {String}
+ */
+function qSelectID_Plural(table, column, repeat = 1, join_phrase = 'OR', rawColumns = '*') {
+    return qSelectID_Multiple(table, new Array(repeat).fill(column), join_phrase, rawColumns);
 }
 
 /**
@@ -139,4 +152,4 @@ async function getColumnsAsSelectAliases(tables) {
     return aliases;
 }
 
-module.exports = {getConnection, query, qCount, qSelectID_Plural, qSelectID, qInsertion, getColumnsAsSelectAliases};
+module.exports = {getConnection, query, qCount, qSelectID_Plural, qSelectID_Multiple, qSelectID, qInsertion, getColumnsAsSelectAliases};
