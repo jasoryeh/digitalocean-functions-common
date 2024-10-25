@@ -113,7 +113,7 @@ async function getColumnsAsSelectAliases(tables) {
     let prepared_fields = new Array(tables.length).fill('?').join(', ');
     let q = qSelect(
         '`information_schema`.`columns`', 
-        ['table_schema = ?', `table_name IN(${prepared_fields})`].join(' AND '),
+        ['table_schema = ?', `table_name IN (${prepared_fields})`].join(' AND '),
         `group_concat(concat('\`', table_name, '\`.\`', column_name, '\` as \\'', table_name, '.', column_name, '\\'') SEPARATOR ', ') as ${ALIAS_RESULT_COLUMN}`)
     /* Equivalent to:
         `SELECT
