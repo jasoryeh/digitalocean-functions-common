@@ -1,15 +1,15 @@
 const { errToObj } = require("./util");
 
 function getRequestMethod(args) {
-    return args["__ow_method"] || null;
+    return args["http"]["method"] || null;
 }
 
 function getRequestHeaders(args) {
-    return args["__ow_headers"] || {};
+    return args["http"]["headers"] || {};
 }
 
 function getRequestPath(args) {
-    let path = args["__ow_path"] || "/";
+    let path = args["http"]["path"] || "/";
     return path == "" ? "/" : path;
 }
 
@@ -56,15 +56,6 @@ function methodRouter(methodRoutes) {
         if (!findRoute || findRoute == null) {
             console.log("Method doesn't exist: " + method);
             console.log(methodRoutes);
-            if (method == "OPTIONS") {
-                let response = responseMaker(args, 200, null, `Preflight/Options.`, `Success.`);
-                response.headers = {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "*",
-                    "Access-Control-Allow-Headers": "*",
-                };
-                return response;
-            }
             return responseMaker(args, 400, null, `Request method unsupported: ${method}`, `The ${method} request method is not supported on this route!`);
         }
         //console.log("Running...");
@@ -93,9 +84,9 @@ function pathRouter(pathRoutes) {
         //console.log("Processing path: " + procdPath);
         var findRoute = pathRoutes[procdPath];
 
-        args['__ow_path'] = "/" + (pathArr.length > 0 ? pathArr.splice(1).join("/") : "");
-        //console.log("Updated path: " + args['__ow_path']);
-        console.log(`Path: ${path} | Processing: ${procdPath} | Forwarded: ${args['__ow_path']}`);
+        args["http"]['path'] = "/" + (pathArr.length > 0 ? pathArr.splice(1).join("/") : "");
+        //console.log("Updated path: " + args["http"]['path']);
+        console.log(`Path: ${path} | Processing: ${procdPath} | Forwarded: ${args["http"]['path']}`);
 
         if (!findRoute || findRoute == null) {
             console.log("Path doesn't exist: " + procdPath);
