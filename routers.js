@@ -29,7 +29,7 @@ function ofBearerToken(bearerToken) {
     return bearerToken.replace("Bearer ", "");
 }
 
-function responseMaker(data = null, code = 200, error = false, notifyMessage = null, ifNull404 = true, headers = {}) {
+function responseMaker(data = null, code = 200, error = false, notifyMessage = null, ifNull404 = true, headers = {"Content-Type": "application/json"}) {
     let response = {
         error: error ? error : false,
         message: notifyMessage ? notifyMessage : null,
@@ -39,7 +39,7 @@ function responseMaker(data = null, code = 200, error = false, notifyMessage = n
     return {
         body: response,
         statusCode: (ifNull404 && data == null) ? 404 : code,
-        headers: {},
+        headers: headers,
     };
 }
 
